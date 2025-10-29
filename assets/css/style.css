@@ -1,0 +1,79 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+#game {
+  height: calc(100vh - 20rem);
+  width: 100%;
+  background: grey;
+}
+
+#dialog {
+  height: 20rem;
+  width: 100%;
+  font-size: 2rem;
+}
+
+.pokechoice {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.pokemon {
+  width: 5rem;
+  height: 5rem;
+  background: black;
+  cursor: pointer;
+}
+
+.player {
+  width: 5rem;
+  height: 5rem;
+  background: black;
+  position: absolute;
+}
+
+.player0 {
+  bottom: 25rem;
+  left: 5rem;
+}
+
+.player1 {
+  top: 5rem;
+  right: 5rem;
+}
+
+.salameche {
+  background: red;
+}
+
+.carapuce {
+  background: blue;
+  color: white;
+}
+
+.bulbizarre {
+  background: green;
+}
+
+.atcks {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+}
+
+.atcks button {
+  width: 45%;
+  height: 45%;
+}
