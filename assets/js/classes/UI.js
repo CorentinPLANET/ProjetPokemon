@@ -30,10 +30,12 @@ export default class UI {
 
   /**
    * Creates combat choice interface
-   * @param {Object} player
+   * @param {object} player
    * Pokemon object
+   * @param {lambda} atckHandler
+   * Variable to pass as a function
    */
-  static dialogAtck(player) {
+  static dialogAtck(player, atckHandler) {
     UI.dialogReset();
 
     const atcks = document.createElement("div");
@@ -41,6 +43,9 @@ export default class UI {
 
     player.atcks.forEach((atck) => {
       const button = document.createElement("button");
+      button.addEventListener("click", () => {
+        atckHandler(atck);
+      });
       button.textContent = atck.name;
       atcks.appendChild(button);
     });
@@ -78,9 +83,9 @@ export default class UI {
   /**
    * Displays Combat Interface
    * @param {array} players
-   * List of players
+   * List of player objects
    */
-  static displayFIght(players) {
+  static displayFight(players) {
     UI.gameReset();
 
     for (let i = 0; i < players.length; i++) {
