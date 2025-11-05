@@ -85,13 +85,20 @@ export default class UI {
    * @param {array} players
    * List of player objects
    */
-  static displayFight(players) {
+    static displayFight(players) {
     UI.gameReset();
-
     for (let i = 0; i < players.length; i++) {
       const pokemon = document.createElement("div");
       pokemon.classList.add("player", `player${i}`, players[i].name);
+      const pokemonHp = document.createElement("div");
+      pokemonHp.classList.add("pokemonHp",`player${i}Hp`)
+      const pokemonName = document.createElement("span");
+      pokemonName.textContent = players[i].name
+      const pokemonHpBar = document.createElement("div")
+      
+      pokemonHp.appendChild(pokemonName)
       UI.gameHTML.appendChild(pokemon);
+      UI.gameHTML.appendChild(pokemonHp)
     }
   }
 

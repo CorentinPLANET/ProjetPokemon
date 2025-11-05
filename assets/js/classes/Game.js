@@ -109,14 +109,15 @@ export default class Game {
       this.atckDamage(slowPlayer, fastAtck);
       if (slowPlayer.healthpoint <= 0) {
         UI.message(`${slowPlayer.name} est K.O. !`);
+      } else {
+        UI.message(`${slowPlayer.name} utilise ${slowAtck.name}`);
+        setTimeout(() => { 
+          this.atckDamage(fastPlayer, slowAtck);
+          if (fastPlayer.healthpoint <= 0) {
+            UI.message(`${fastPlayer.name} est K.O. !`);
+          }
+        }, 2000);
       }
-      UI.message(`${slowPlayer.name} utilise ${slowAtck.name}`);
-      setTimeout(() => {
-        this.atckDamage(fastPlayer, slowAtck);
-        if (fastPlayer.healthpoint <= 0) {
-          UI.message(`${fastPlayer.name} est K.O. !`);
-        }
-      }, 2000);
     }, 2000);
   }
 }

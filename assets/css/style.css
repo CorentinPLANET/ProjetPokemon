@@ -49,7 +49,22 @@ body {
   top: 5rem;
   right: 5rem;
 }
-
+.pokemonHp {
+  width:30vw;
+  height: 10vh;
+  padding: 1rem;
+  background: rgb(200, 200, 200);
+  border-radius: 20px;
+  position: absolute;
+}
+.player0Hp {
+  bottom: 32rem;
+  left : 3rem
+}
+.player1Hp {
+  top: 12rem;
+  right: 3rem
+}
 .salameche {
   background: red;
 }
