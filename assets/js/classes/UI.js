@@ -94,4 +94,5 @@ export default class UI {
       UI.gameHTML.appendChild(pokemon);
     }
   }
+
 }

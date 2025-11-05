@@ -7,7 +7,7 @@ export default class Pokemon {
       atcks: [
         {
           name: "flame",
-          dmg: 10,
+          dmg: 50,
           pp: 25,
         },
         {
@@ -27,13 +27,14 @@ export default class Pokemon {
         },
       ],
       healthpoint: 100,
+      speed:20
     },
     {
       name: "carapuce",
       atcks: [
         {
           name: "water",
-          dmg: 10,
+          dmg: 50,
           pp: 25,
         },
         {
@@ -53,13 +54,14 @@ export default class Pokemon {
         },
       ],
       healthpoint: 100,
+      speed:30
     },
     {
       name: "bulbizarre",
-      atcks: [
+        atcks: [
         {
           name: "plant",
-          dmg: 10,
+          dmg: 50,
           pp: 25,
         },
         {
@@ -79,6 +81,7 @@ export default class Pokemon {
         },
       ],
       healthpoint: 100,
+      speed:10
     },
   ];
 
@@ -89,5 +92,6 @@ export default class Pokemon {
     this.name = dataPokemon.name;
     this.healthpoint = dataPokemon.healthpoint;
     dataPokemon.atcks.forEach((atck) => this.atcks.push(new Atck(atck)));
+    this.speed =dataPokemon.speed;
   }
 }
