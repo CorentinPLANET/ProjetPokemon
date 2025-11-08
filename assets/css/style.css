@@ -50,20 +50,38 @@ body {
   right: 5rem;
 }
 .pokemonHp {
-  width:30vw;
+  width: 30vw;
   height: 10vh;
   padding: 1rem;
   background: rgb(200, 200, 200);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   border-radius: 20px;
   position: absolute;
 }
 .player0Hp {
   bottom: 32rem;
-  left : 3rem
+  left: 3rem;
 }
 .player1Hp {
   top: 12rem;
-  right: 3rem
+  right: 3rem;
+}
+.pokemonName{
+font-size: larger;
+}
+.pokemonHpBar {
+  width: 80%;
+  height: 20%;
+  padding: 10px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+}
+.pokemonHpBarAnimated {
+  height: 100%;
+  background-color: greenyellow;
 }
 .salameche {
   background: red;

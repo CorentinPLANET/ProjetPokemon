@@ -85,21 +85,31 @@ export default class UI {
    * @param {array} players
    * List of player objects
    */
-    static displayFight(players) {
+  static displayFight(players) {
     UI.gameReset();
     for (let i = 0; i < players.length; i++) {
       const pokemon = document.createElement("div");
       pokemon.classList.add("player", `player${i}`, players[i].name);
+
       const pokemonHp = document.createElement("div");
-      pokemonHp.classList.add("pokemonHp",`player${i}Hp`)
+      pokemonHp.classList.add("pokemonHp", `player${i}Hp`);
+
       const pokemonName = document.createElement("span");
-      pokemonName.textContent = players[i].name
-      const pokemonHpBar = document.createElement("div")
-      
-      pokemonHp.appendChild(pokemonName)
+      pokemonName.textContent = players[i].name;
+      pokemonName.classList.add("pokemonName");
+
+      const pokemonHpBar = document.createElement("div");
+      pokemonHpBar.classList.add("pokemonHpBar");
+
+      const pokemonHpBarAnimated = document.createElement("div");
+      pokemonHpBarAnimated.classList.add("pokemonHpBarAnimated");
+      pokemonHpBarAnimated.style.width = Math.floor((players[i].healthpoint / players[i].maxHealth)*100)+ "%";
+
+      pokemonHpBar.appendChild(pokemonHpBarAnimated);
+      pokemonHp.appendChild(pokemonName);
+      pokemonHp.appendChild(pokemonHpBar);
       UI.gameHTML.appendChild(pokemon);
-      UI.gameHTML.appendChild(pokemonHp)
+      UI.gameHTML.appendChild(pokemonHp);
     }
   }
-
 }

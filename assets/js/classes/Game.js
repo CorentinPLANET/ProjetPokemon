@@ -28,8 +28,10 @@ export default class Game {
 
   /**
    * Player 1 & Player 2 choose their attack one after the other
-   * @param {*} player1
-   * @param {*} atckPlayer1
+   * @param {Object} player1
+   * data Player 1
+   * @param {Object} atckPlayer1
+   * Attack Player 1
    */
   play(player1, atckPlayer1) {
     const player = this.players[this.turn];
@@ -74,23 +76,57 @@ export default class Game {
    * Data of Player2's Pokemon
    */
   speedCheck(dataP1, dataP2) {
-    if (dataP1.speed <= dataP2.speed) {
+    if (dataP1.speed < dataP2.speed) {
       return false;
-    } else {
+    } else if (dataP1.speed > dataP2.speed) {
       return true;
+    } else {
+      if (this.random(0, 1) == 0) {
+        return false;
+      } else {
+        return true;
+      }
     }
   }
   /**
    * Calculates damage and updates pp
+   * @param {Object} player
+   * Object containing data of attacker
    * @param {Object} target
    * Object containing data of attack target
    * @param {Object} atckData
    * Object containing all Attack Data
+   * @returns {int} damage dealt
    */
-  atckDamage(target, atckData) {
+  atckDamage(player, target, atckData) {
     atckData.pp--;
-    target.healthpoint -= atckData.dmg;
-    console.log(target.healthpoint);
+    let damage =
+      atckData.dmg + player.attack - target.defence > 0
+        ? atckData.dmg + player.attack - target.defence
+        : 1;
+    target.healthpoint -= damage;
+    return damage;
+  }
+  /**
+   * heals player by half maxHP or sets healthpoint to maxHealth in case of overhealing
+   * @param {Object} player
+   * player that receives healing
+   */
+  heal(player, atckData) {
+    atckData.pp--;
+    player.maxHealth < player.healthpoint + Math.floor(player.maxHealth / 2)
+      ? (player.healthpoint = player.maxHealth)
+      : (player.healthpoint += Math.floor(player.maxHealth / 2));
+    console.log(player.healthpoint);
+  }
+  lifeSteal(player, target, atckData) {
+    player.maxHealth <
+    player.healthpoint +
+      Math.floor(this.atckDamage(player, target, atckData) / 2)
+      ? (player.healthpoint = player.maxHealth)
+      : (player.healthpoint += Math.floor(
+          this.atckDamage(player, target, atckData) / 2
+        ));
   }
   /**
    * Displays text for combat by order of speed
@@ -106,18 +142,62 @@ export default class Game {
   fightText(fastPlayer, fastAtck, slowPlayer, slowAtck) {
     UI.message(`${fastPlayer.name} utilise ${fastAtck.name}`);
     setTimeout(() => {
-      this.atckDamage(slowPlayer, fastAtck);
+      if (fastAtck.purpose == "damage") {
+        this.atckDamage(fastPlayer, slowPlayer, fastAtck);
+      } else if (fastAtck.purpose == "heal") {
+        this.heal(fastPlayer,fastAtck);
+      } else if (fastAtck.purpose == "lifesteal") {
+        this.lifeSteal(fastPlayer, slowPlayer, fastAtck);
+      }
+      UI.displayFight(this.players);
       if (slowPlayer.healthpoint <= 0) {
         UI.message(`${slowPlayer.name} est K.O. !`);
+        setTimeout(() => {
+          this.endCombat(fastPlayer);
+        }, 2000);
       } else {
         UI.message(`${slowPlayer.name} utilise ${slowAtck.name}`);
-        setTimeout(() => { 
-          this.atckDamage(fastPlayer, slowAtck);
+        setTimeout(() => {
+          if (slowAtck.purpose == "damage") {
+            this.atckDamage(slowPlayer, fastPlayer, slowAtck);
+          } else if (slowAtck.purpose == "heal") {
+            this.heal(slowPlayer,slowAtck);
+          } else if (slowAtck.purpose == "lifesteal") {
+            this.lifeSteal(slowPlayer, fastPlayer, slowAtck);
+          }
+
+          UI.displayFight(this.players);
           if (fastPlayer.healthpoint <= 0) {
             UI.message(`${fastPlayer.name} est K.O. !`);
+            setTimeout(() => {
+              this.endCombat(slowPlayer);
+            }, 2000);
           }
-        }, 2000);
+        }, 1500);
       }
-    }, 2000);
+    }, 1500);
+  }
+  /**
+   * Generates a number between the lowerBound and the higherBound
+   * @param {int} lowerBound
+   * lowest number that the function can return
+   * @param {int} higherBound
+   * highest number that the function can return
+   * @returns
+   * a number between the lowerBound and the higherBound
+   */
+  random(lowerBound, higherBound) {
+    return (
+      Math.floor(Math.random() * (higherBound - lowerBound + 1)) + lowerBound
+    );
+  }
+  /**
+   * ends combat with winner message
+   * @param {Object} winner
+   * Winning Pokemon
+   */
+  endCombat(winner) {
+    console.log("pass");
+    UI.message(`${winner.name} a gagné le combat`);
   }
 }
